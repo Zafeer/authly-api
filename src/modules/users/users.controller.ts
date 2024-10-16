@@ -14,6 +14,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles, User } from '@prisma/client';
 import { UserParsePipe } from './pipes/user.parse.pipes';
+import UserBaseEntity from './entities/user-base.entity';
+import UserEntity from './entities/user.entity';
+import Serialize from '@decorators/serialize.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -25,13 +28,15 @@ export class UsersController {
   }
 
   @Get()
+  @Serialize(UserBaseEntity)
+  @UseAbility(Actions.read, UserEntity)
   findAll(@Query('roles') roles?: Roles[]) {
     return this.usersService.findAll(roles);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  findById(@Param('id') id: string) {
+    return this.usersService.findById(id);
   }
 
   @Patch(':id')

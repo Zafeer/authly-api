@@ -13,7 +13,7 @@ export class UserParsePipe implements PipeTransform {
 
   async transform(value: any, metadata: ArgumentMetadata): Promise<User> {
     if (metadata.type === 'param' && metadata.data === 'id') {
-      const user: User = await this.userService.findOne(value);
+      const user: User = await this.userService.findById(value);
       if (!user) {
         throw new NotFoundException('User not found');
       }

@@ -15,9 +15,7 @@ export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createUserDto: Prisma.UserCreateInput): Promise<User> {
-    const user: User = await this.prismaService.user.findFirst({
-      where: { email: createUserDto.email },
-    });
+    const user: User = await this.findByEmail(createUserDto.email);
 
     if (user) {
       // 409001: User with this email or phone already exists
@@ -32,8 +30,12 @@ export class UsersService {
     return this.prismaService.user.findMany({ where: whereClause });
   }
 
-  async findOne(id: string): Promise<User> {
+  async findById(id: string): Promise<User> {
     return await this.prismaService.user.findFirst({ where: { id } });
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    return await this.prismaService.user.findFirst({ where: { email } });
   }
 
   public async update(
@@ -50,7 +52,7 @@ export class UsersService {
   }
 
   public async delete(id: string): Promise<void> {
-    const user = await this.findOne(id);
+    const user = await this.findById(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
