@@ -18,7 +18,7 @@ import {
 import { User } from '@prisma/client';
 import { LoginDto } from '@modules/auth/dto/login.dto';
 import { TokenService } from '@modules/auth/token.service';
-import { generateHash, generateOTP, validateHash } from '@helpers/utils';
+import { generateOTP, validateHash } from '@helpers/utils';
 import { MailService } from '@helpers/mailer/mail/mail.service';
 import { VerifyEmailDto } from './dto/verify-email';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
@@ -42,11 +42,10 @@ export class AuthService {
     const user: User = await this.usersService.create(signUpDto);
 
     const otpToken = generateOTP(parseInt(process.env.OTP_LENGTH));
-    const otpTokenHash = await generateHash(otpToken);
 
     const otpTokenExpiredAt = new Date(Date.now() + 10 * 60 * 1000);
     await this.usersService.update(user.id, {
-      otpTokenHash,
+      otpTokenHash: otpToken,
       otpTokenExpiredAt,
     });
 
@@ -131,11 +130,10 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
     const otpToken = generateOTP(parseInt(process.env.OTP_LENGTH));
-    const otpTokenHash = await generateHash(otpToken);
 
     const otpTokenExpiredAt = new Date(Date.now() + 10 * 60 * 1000);
     await this.usersService.update(user.id, {
-      otpTokenHash,
+      otpTokenHash: otpToken,
       otpTokenExpiredAt,
     });
 
@@ -160,10 +158,10 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException(USER_NOT_FOUND);
     }
-    if (
-      !user?.otpTokenExpiredAt ||
-      isNaN(new Date(user.otpTokenExpiredAt).getTime())
-    ) {
+    if (!user?.otpTokenExpiredAt) {
+      throw new UnauthorizedException(INVALID_OTP_TOKEN);
+    }
+    if (isNaN(new Date(user.otpTokenExpiredAt).getTime())) {
       throw new UnauthorizedException(INVALID_OTP_EXPIRY);
     }
     if (user?.otpTokenExpiredAt < new Date()) {
