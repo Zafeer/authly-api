@@ -19,5 +19,5 @@ export default class UserBaseEntity extends PartialType(UserEntity) {
 
   @ApiProperty({ type: Boolean })
   @Expose()
-  declare readonly isVerified: boolean;
+  declare readonly is_verified: boolean;
 }

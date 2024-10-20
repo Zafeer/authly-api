@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { generateHash } from '@common/utils';
+import { generateHash } from '@helpers/utils';
 
 export const updateUserMiddleware = Prisma.defineExtension((client) => {
   return client.$extends({

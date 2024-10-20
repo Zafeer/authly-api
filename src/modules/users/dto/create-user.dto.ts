@@ -1,11 +1,15 @@
+import { LowerCaseTransformer } from '@helpers/transformers/lower-case.transformer';
 import { Roles } from '@prisma/client';
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
   IsEnum,
   IsString,
   Matches,
+  IsDate,
+  isBoolean,
+  IsBoolean,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -19,6 +23,7 @@ export class CreateUserDto {
         'Email must be a valid email address in the format: example@domain.com',
     },
   )
+  @Transform(LowerCaseTransformer)
   @IsNotEmpty()
   email: string;
 
@@ -36,4 +41,15 @@ export class CreateUserDto {
     each: true,
   })
   roles: Roles[] = [Roles.CUSTOMER];
+
+  @IsBoolean()
+  is_verified: boolean = false;
+
+  @IsDate()
+  @Exclude({ toPlainOnly: true })
+  otpTokenExpiredAt: Date;
+
+  @IsString()
+  @Exclude({ toPlainOnly: true })
+  otpTokenHash: string;
 }

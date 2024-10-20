@@ -24,6 +24,21 @@ model User {
   name      String?
   password  String
   roles     Roles[]  @default([CUSTOMER])
+  is_verified Boolean  @default(false)
+  otpTokenHash     String?
+  otpTokenExpiredAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+}
+
+
+model TokenWhiteList {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId 
+  accessToken  String?
+  refreshToken String?
+  refreshTokenId String?
+  expiredAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt @default(now())
 }

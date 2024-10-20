@@ -9,6 +9,7 @@
   "coverageDirectory": "../coverage",
   "testEnvironment": "node",
   "moduleNameMapper": {
+    "@casl(.*)": "<rootDir>/src/casl/$1",
     "@filters(.*)": "<rootDir>/src/filters/$1",
     "@guards(.*)": "<rootDir>/src/guards/$1",
     "@pipes(.*)": "<rootDir>/src/pipes/$1",
@@ -22,6 +23,7 @@
     "@helpers(.*)": "<rootDir>/src/helpers/$1",
     "@types(.*)": "<rootDir>/src/types/$1",
     "@constants(.*)": "<rootDir>/src/constants/$1",
+    "@middlewares(.*)": "<rootDir>/src/middlewares/$1",
     "@common(.*)": "<rootDir>/src/common/$1"
   }
 }

@@ -1,7 +1,7 @@
 import {
   FORBIDDEN_RESOURCE,
   UNAUTHORIZED_RESOURCE,
-} from '@constants/errors.constants';
+} from '@constants/http-errors-codes';
 import {
   ArgumentsHost,
   Catch,

@@ -18,6 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@casl/*": ["./src/casl/*"],
       "@filters/*": ["./src/filters/*"],
       "@guards/*": ["./src/guards/*"],
       "@pipes/*": ["./src/pipes/*"],
@@ -31,6 +32,7 @@
       "@helpers/*": ["./src/helpers/*"],
       "@types/*": ["./src/types/*"],
       "@constants/*": ["./src/constants/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
       "@validators/*": ["./src/validators/*"],
       "@common/*": ["./src/common/*"]
     }

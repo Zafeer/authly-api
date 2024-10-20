@@ -6,9 +6,12 @@ import {
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '@providers/prisma/prisma.service';
 import { User, Prisma, Roles } from '@prisma/client';
-import { USER_CONFLICT } from '@constants/errors.constants';
+import { USER_CONFLICT } from '@constants/http-errors-codes';
 
-export type UserWithoutPassword = Omit<User, 'password'>;
+export type UserWithoutPassword = Omit<
+  User,
+  'password' | 'otpTokenExpiredAt' | 'otpTokenHash'
+>;
 
 @Injectable()
 export class UsersService {
@@ -18,7 +21,7 @@ export class UsersService {
     const user: User = await this.findByEmail(createUserDto.email);
 
     if (user) {
-      // 409001: User with this email or phone already exists
+      // 409001: User with this email already exists
       throw new ConflictException(USER_CONFLICT);
     }
     return await this.prismaService.user.create({ data: createUserDto });
@@ -46,8 +49,15 @@ export class UsersService {
       where: { id },
       data: updateUserDto,
     });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...userWithoutPassword } = await updatedUser;
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      password,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      otpTokenExpiredAt,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      otpTokenHash,
+      ...userWithoutPassword
+    } = await updatedUser;
     return userWithoutPassword;
   }
 

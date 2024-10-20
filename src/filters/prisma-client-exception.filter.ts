@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Prisma } from '@prisma/client';
-import { PRISMA_API_ERROR } from '@constants/errors.constants';
+import { PRISMA_API_ERROR } from '@constants/http-errors-codes';
 import {
   ErrorCodesStatusMapping,
   PRISMA_ERROR_CODES,

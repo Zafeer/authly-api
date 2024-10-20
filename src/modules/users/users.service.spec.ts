@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { PrismaService } from '@providers/prisma/prisma.service';
 import { ConflictException, NotFoundException } from '@nestjs/common';
-import { USER_CONFLICT } from '@constants/errors.constants';
+import { USER_CONFLICT } from '@constants/http-errors-codes';
 import { User, Roles } from '@prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
 
