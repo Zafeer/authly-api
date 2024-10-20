@@ -12,6 +12,7 @@ import {
   INVALID_OTP_TOKEN,
   NOT_FOUND,
   OTP_TOKEN_IS_EXPIRED,
+  UNVERIFIED_EMAIL,
   USER_NOT_FOUND,
   USER_VERIFIED_CONFLICT,
 } from '@constants/http-errors-codes';
@@ -39,6 +40,8 @@ export class AuthService {
    * @throws ConflictException - User with this email already exists
    */
   async signUp(signUpDto: SignUpDto): Promise<User> {
+    // Set default values for createUserDto
+    signUpDto.is_verified = signUpDto.is_verified ?? false;
     const user: User = await this.usersService.create(signUpDto);
 
     const otpToken = generateOTP(parseInt(process.env.OTP_LENGTH));
@@ -70,6 +73,10 @@ export class AuthService {
 
     if (!user) {
       throw new NotFoundException(NOT_FOUND);
+    }
+
+    if (!user?.is_verified) {
+      throw new UnauthorizedException(UNVERIFIED_EMAIL);
     }
 
     if (!(await validateHash(LoginDto.password, user.password))) {
@@ -167,8 +174,6 @@ export class AuthService {
     if (user?.otpTokenExpiredAt < new Date()) {
       throw new UnauthorizedException(OTP_TOKEN_IS_EXPIRED);
     }
-    console.log('resetPasswordDto.otpToken', resetPasswordDto.otpToken);
-    console.log('user.otpTokenHash', user.otpTokenHash);
     if (!(await validateHash(resetPasswordDto.otpToken, user.otpTokenHash))) {
       throw new UnauthorizedException(INVALID_OTP_TOKEN);
     }
