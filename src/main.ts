@@ -14,7 +14,6 @@ import validationExceptionFactory from '@filters/validation-exception-factory';
 import { ConfigService } from '@nestjs/config';
 import { TransformInterceptor } from '@interceptors/transform.interceptor';
 import helmet from 'helmet';
-import { CorsConfig } from '@config/config.interface';
 import * as basicAuth from 'express-basic-auth';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 // import { winstonLogger } from '@helpers/logger/logger.service';
