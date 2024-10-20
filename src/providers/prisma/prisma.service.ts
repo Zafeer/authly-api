@@ -1,8 +1,7 @@
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { createUserMiddleware } from '@modules/users/middlewares/create-user.middleware';
+import { userMiddleware } from '@modules/users/middlewares/user.middleware';
 import { queryTimeMiddleware } from '@providers/prisma/middlewares/query-time.middleware';
-import { updateUserMiddleware } from '@modules/users/middlewares/update-user.middleware';
 
 function extendPrismaClient() {
   const prisma = new PrismaClient();
@@ -21,8 +20,7 @@ function extendPrismaClient() {
       },
     })
     .$extends(queryTimeMiddleware)
-    .$extends(createUserMiddleware)
-    .$extends(updateUserMiddleware);
+    .$extends(userMiddleware);
 }
 
 const ExtendedPrismaClient = class {
