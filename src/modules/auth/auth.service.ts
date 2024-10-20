@@ -177,7 +177,7 @@ export class AuthService {
 
     await this.usersService.update(user.id, {
       is_verified: true,
-      password: await generateHash(resetPasswordDto.password),
+      password: resetPasswordDto.password,
       otpTokenExpiredAt: null,
       otpTokenHash: null,
     });
