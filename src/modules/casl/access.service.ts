@@ -117,11 +117,13 @@ export class AccessService {
       userAbilities = this.abilityFactory.createForUser(finalUser);
     }
 
+    // Check if the user has the permission to perform the action on the subject instance
     // and match agains subject instance
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return userAbilities.can(
+    const hasPermission = userAbilities.can(
       ability.action,
       subject(ability.subject as any, subjectInstance),
     );
+
+    return hasPermission || request?.params?.id === finalUser.id;
   }
 }

@@ -93,9 +93,7 @@ export class AuthController {
   @Get('me')
   @Serialize(UserBaseEntity)
   @ApiBearerAuth()
-  @UseGuards(AccessGuard)
   @HttpCode(HttpStatus.OK)
-  // @UseAbility(Actions.delete, TokensEntity)
   async getMe(@CaslUser() userProxy?: UserProxy<User>): Promise<User> {
     const { id: userId } = await userProxy.get();
 
@@ -106,7 +104,7 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(AccessGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
-  // @UseAbility(Actions.delete, TokensEntity)
+  @UseAbility(Actions.delete, TokensEntity)
   async logout(@CaslUser() userProxy?: UserProxy<User>) {
     const { accessToken } = await userProxy.getMeta();
     const { id: userId } = await userProxy.get();

@@ -4,6 +4,7 @@ import { AuthorizableUser } from '@modules/casl';
 import { SubjectBeforeFilterHook, UserBeforeFilterHook } from '@modules/casl';
 import { NullSubjectHook } from '../factories/subject-hook.factory';
 import { NullUserHook } from '../factories/user-hook.factory';
+import { ConditionsProxy } from '@modules/casl';
 
 export class RequestProxy<
   User extends AuthorizableUser<unknown, unknown> = AuthorizableUser,
@@ -24,6 +25,14 @@ export class RequestProxy<
 
   public get cached(): CaslRequestCache<User, Subject> {
     return this.request.casl as CaslRequestCache<User, Subject>;
+  }
+
+  public getConditions(): ConditionsProxy | undefined {
+    return this.cached.conditions;
+  }
+
+  public setConditions(conditions: ConditionsProxy): void {
+    this.cached.conditions = conditions;
   }
 
   public getSubject(): Subject | undefined {

@@ -2,6 +2,7 @@ import {
   SubjectBeforeFilterHook,
   UserBeforeFilterHook,
   AuthorizableUser,
+  ConditionsProxy,
 } from '@modules/casl';
 
 export interface CaslRequestCache<
@@ -10,6 +11,7 @@ export interface CaslRequestCache<
 > {
   user?: User;
   subject?: Subject;
+  conditions?: ConditionsProxy;
   hooks: {
     user: UserBeforeFilterHook<User>;
     subject: SubjectBeforeFilterHook<Subject>;

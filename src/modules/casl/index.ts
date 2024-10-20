@@ -5,7 +5,12 @@ export type { AuthorizableUserMeta } from './interfaces/authorizable-user-meta.i
 
 export type { AuthorizableRequest } from './interfaces/request.interface';
 
-export { CaslSubject, CaslUser, UseAbility } from './decorators';
+export {
+  CaslSubject,
+  CaslUser,
+  UseAbility,
+  CaslConditions,
+} from './decorators';
 
 export type {
   SubjectBeforeFilterHook,
@@ -28,6 +33,8 @@ export type {
 export { Actions, DefaultActions } from './actions.enum';
 
 export { UserProxy } from './proxies/user.proxy';
+
+export { ConditionsProxy } from './proxies/conditions.proxy';
 
 export { SubjectProxy } from './proxies/subject.proxy';
 

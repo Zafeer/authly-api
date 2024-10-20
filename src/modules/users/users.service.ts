@@ -45,9 +45,13 @@ export class UsersService {
     id: string,
     updateUserDto: UpdateUserDto,
   ): Promise<UserWithoutPassword> {
+    const partialDataUpdate = Object.fromEntries(
+      Object.entries(updateUserDto).filter(([_, value]) => value !== undefined),
+    );
+    console.log(partialDataUpdate);
     const updatedUser = this.prismaService.user.update({
       where: { id },
-      data: updateUserDto,
+      data: partialDataUpdate,
     });
     const {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

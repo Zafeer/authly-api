@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UserHook } from './users.hook';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles, User } from '@prisma/client';
 import { UserParsePipe } from './pipes/user.parse.pipes';
@@ -55,6 +55,7 @@ export class UsersController {
   @ApiOkBaseResponse({ dto: UserBaseEntity, isArray: false })
   @ApiParam({ name: 'id', type: 'string' })
   @UseGuards(AccessGuard)
+  @UseAbility(Actions.read, UserEntity, UserHook)
   findById(@Param('id') id: string) {
     return this.usersService.findById(id);
   }
@@ -63,10 +64,16 @@ export class UsersController {
   @ApiOkBaseResponse({ dto: UserBaseEntity, isArray: false })
   @ApiParam({ name: 'id', type: 'string' })
   @UseGuards(AccessGuard)
-  update(
+  @UseAbility(Actions.update, UserEntity, UserHook)
+  async update(
     @Param('id', UserParsePipe) user: User,
     @Body(ValidationPipe) updateUserDto: UpdateUserDto,
+    // @CaslUser() userProxy?: UserProxy<User>,
+    // @CaslConditions() conditions?: ConditionsProxy,
+    // @CaslSubject() subjectProxy?: SubjectProxy<User>,
   ) {
+    // const tokenUser = await userProxy.get();
+    // const subject = await subjectProxy.get();
     return this.usersService.update(user?.id, updateUserDto);
   }
 
@@ -74,6 +81,7 @@ export class UsersController {
   @ApiOkBaseResponse({ dto: UserBaseEntity, isArray: false })
   @ApiParam({ name: 'id', type: 'string' })
   @UseGuards(AccessGuard)
+  @UseAbility(Actions.delete, UserEntity)
   delete(@Param('id', UserParsePipe) user: User) {
     return this.usersService.delete(user?.id);
   }

@@ -8,7 +8,6 @@ import {
   IsString,
   Matches,
   IsDate,
-  isBoolean,
   IsBoolean,
 } from 'class-validator';
 
@@ -40,10 +39,10 @@ export class CreateUserDto {
     message: 'Valid role required',
     each: true,
   })
-  roles: Roles[] = [Roles.CUSTOMER];
+  roles: Roles[];
 
   @IsBoolean()
-  is_verified: boolean = false;
+  is_verified: boolean;
 
   @IsDate()
   @Exclude({ toPlainOnly: true })
