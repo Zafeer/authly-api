@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as fs from 'node:fs/promises';
 import { ConfigService } from '@nestjs/config';
 import Handlebars from 'handlebars';
-import { MailConfig } from '../mail/config/mail-config.type';
 import { Resend } from 'resend';
 
 @Injectable()

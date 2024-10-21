@@ -6,7 +6,6 @@ import { MailData } from './interfaces/mail-data.interface';
 import { MaybeType } from '@helpers/types/maybe.type';
 import { MailerService } from '../mailer/mailer.service';
 import * as path from 'path';
-import { AppConfig } from '@config/app-config.type';
 
 @Injectable()
 export class MailService {

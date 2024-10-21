@@ -48,7 +48,6 @@ export class UsersService {
     const partialDataUpdate = Object.fromEntries(
       Object.entries(updateUserDto).filter(([_, value]) => value !== undefined),
     );
-    console.log(partialDataUpdate);
     const updatedUser = this.prismaService.user.update({
       where: { id },
       data: partialDataUpdate,

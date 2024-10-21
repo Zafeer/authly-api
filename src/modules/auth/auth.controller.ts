@@ -81,7 +81,7 @@ export class AuthController {
     return this.authService.resetPassword(resetPasswordDto);
   }
 
-  @Post('token-refresh')
+  @Post('refresh-token')
   @ApiBody({ type: RefreshTokenDto })
   @SkipAuth()
   refreshToken(
