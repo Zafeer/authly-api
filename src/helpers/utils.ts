@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 /**
  * generate hash from password or string
@@ -26,16 +27,10 @@ export async function validateHash(
   return bcrypt.compare(password, hash);
 }
 
-export function generateOTP(length: number): string {
-  const characters = '0123456789';
-
-  let otp = '';
-  for (let o = 0; o < length; o++) {
-    const getRandomIndex = Math.floor(Math.random() * characters.length);
-    otp += characters[getRandomIndex];
-  }
-
-  return otp;
+export function generateOTP(length: number = 6): string {
+  const max = Math.pow(10, length);
+  const randomNumber = crypto.randomInt(0, max);
+  return randomNumber.toString().padStart(length, '0');
 }
 
 export function redactSensitiveFields(body: any, keysToRedact: string[]): any {

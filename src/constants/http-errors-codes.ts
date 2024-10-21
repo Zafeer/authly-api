@@ -46,7 +46,6 @@ export const INVALID_VERIFICATION_CODE = '400017: Invalid verification code';
 export const AUTH_CREDENTIALS_INVALID =
   '400018: Authentication credentials were missing or incorrect';
 export const PHONE_OR_EMAIL_IS_REQUIRED = '400019: Phone or email is required';
-export const USER_NOT_VERIFIED = '400020: User is not verified';
 
 export const CONFLICT = '409000: Conflict';
 export const USER_CONFLICT = '409001: User with this email already exists';
@@ -71,6 +70,8 @@ export const FOLLOW_REQUEST_ALREADY_EXISTS =
 export const INVITE_NOT_AVAILABLE = '409019: Invite not available';
 
 export const RATE_LIMIT_EXCEEDED = '429000: Rate limit exceeded';
+export const OTP_RATE_LIMIT_EXCEEDED =
+  '429001: Please wait for a minute before requesting a new OTP token';
 
 export const VALIDATION_ERROR = '422000: Validation error';
 

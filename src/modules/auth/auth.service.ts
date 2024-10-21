@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -11,6 +12,7 @@ import {
   INVALID_OTP_EXPIRY,
   INVALID_OTP_TOKEN,
   NOT_FOUND,
+  OTP_RATE_LIMIT_EXCEEDED,
   OTP_TOKEN_IS_EXPIRED,
   UNVERIFIED_EMAIL,
   USER_NOT_FOUND,
@@ -46,7 +48,7 @@ export class AuthService {
 
     const otpToken = generateOTP(parseInt(process.env.OTP_LENGTH));
 
-    const otpTokenExpiredAt = new Date(Date.now() + 10 * 60 * 1000);
+    const otpTokenExpiredAt = new Date(Date.now() + 5 * 60 * 1000);
     await this.usersService.update(user.id, {
       otpTokenHash: otpToken,
       otpTokenExpiredAt,
@@ -136,9 +138,21 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException(USER_NOT_FOUND);
     }
+
+    const now = new Date();
+    const currentOtpTokenExpiry = user.otpTokenExpiredAt;
+
+    if (currentOtpTokenExpiry) {
+      const timeDifference =
+        (new Date(currentOtpTokenExpiry).getTime() - now.getTime()) / 1000 / 60; // Difference in minutes
+      if (timeDifference > 4) {
+        throw new BadRequestException(OTP_RATE_LIMIT_EXCEEDED);
+      }
+    }
+
     const otpToken = generateOTP(parseInt(process.env.OTP_LENGTH));
 
-    const otpTokenExpiredAt = new Date(Date.now() + 10 * 60 * 1000);
+    const otpTokenExpiredAt = new Date(Date.now() + 5 * 60 * 1000);
     await this.usersService.update(user.id, {
       otpTokenHash: otpToken,
       otpTokenExpiredAt,
