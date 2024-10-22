@@ -1,30 +1,143 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# General
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This repo contains the backend for the EasyGenerator interview assignment.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Functionality 🛠️
 
-## Description
+### **User Management** 🚹:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- View User Info
+- View All Users
+- Simple query builder with query by roles
+- Update User
+- Delete User
+
+### **Auth Management** 🔐:
+
+- Sign Up User
+- Sign In User
+- Forgot /Reset Password of User
+- Verify Email
+- Refresh token
+
+### **Health Management** 🔐:
+
+- Get Health
+- Get Memory
+- Get Disk
+
+# Features
+
+- Authentication
+  - JWT integration
+  - Email verification with OTP
+  - 5 minute OTP expiry
+  - 1 hour access token expiry
+  - 10 day refresh token expiry
+  - Rate limit OTP reissue
+  - Refresh token revocation
+  - Email sending
+  - Route Guards
+  - Hashing of passwords and OTP tokens
+- CASL Integration
+  - Authorization Guards with role (CUSTOMER, ADMIN)
+  - Authorization by role, subject, conditions
+- Filters
+  - Exception Filters
+- Validation Pipes
+- Swagger Documentation
+- Middlewares
+- Interceptors
+- Transformers
+- Decorators
+- Security
+  - Throttling of requests
+  - Allow CORS for now
+  - Helmet
+  - API versioning
+  - Env variables
+- Logging
+  - Integration of pino with JSON logging.
+  - Log request body
+  - Redact sensitive data
+  - Correlation Id for each request for debugging
+  - Error constants mapping and response
+- Docker Compose
+- MongoDB Replica Set
+- Serializers
+- Health Check
+
+# Providers implemented
+
+- Prisma
+
+# Tools/Technologies
+
+- Nest.js 10
+- Docker
+- Docker Compose
+- MongoDB
+- Node.js
+- NPM
+
+# Development
+
+## MongoDB Replica Set
+
+1. Create volume for each MongoDB node
+
+```bash
+docker volume create --name mongodb_repl_data1 -d local
+docker volume create --name mongodb_repl_data2 -d local
+docker volume create --name mongodb_repl_data3 -d local
+```
+
+2. Start the Docker containers using docker-compose
+
+```bash
+docker-compose up -d
+```
+
+3. Start an interactive MongoDb shell session on the primary node
+
+```bash
+docker exec -it mongo0 mongosh --port 30000
+
+# in the shell
+config={"_id":"rs0","members":[{"_id":0,"host":"mongo0:30000"},{"_id":1,"host":"mongo1:30001"},{"_id":2,"host":"mongo2:30002"}]}
+rs.initiate(config);
+```
+
+4 Update hosts file
+
+```bash
+sudo nano /etc/hosts
+
+# write in the file
+127.0.0.1 mongo0 mongo1 mongo2
+```
+
+5. Connect to MongoDB and check the status of the replica set
+
+```
+mongosh "mongodb://localhost:30000,localhost:30001,localhost:30002/?replicaSet=rs0"
+```
+
+## Migration
+
+1. Run migrations
+
+```bash
+npm run db:migrate:up
+```
+
+## Project setup
+
+1. Install Dependancies
+
+```
+npm install
+```
 
 ## Project setup
 
@@ -33,6 +146,20 @@ $ npm install
 ```
 
 ## Compile and run the project
+
+1. Generate Prisma Types
+
+```
+npm run db:generate
+```
+
+2. Push MongoDB Schema
+
+```
+npm run db:push
+```
+
+3. Run application in below ways
 
 ```bash
 # development
@@ -58,28 +185,45 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Resources
+## Swagger
 
-Check out a few resources that may come in handy when working with NestJS:
+Swagger documentation is available at http://localhost:3000/docs
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## JWT
 
-## Support
+### AuthGuard
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+`AuthGuard` will look for a JWT in the `Authorization` header with the scheme `Bearer`.
+All routes that are protected by the `AuthGuard` decorator will require a valid JWT token in the `Authorization` header of the incoming request.
 
-## Stay in touch
+```typescript
+providers: [
+  {
+    provide: APP_GUARD,
+    useClass: AuthGuard,
+  },
+];
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### SkipAuth
 
-## License
+You can skip authentication for a route by using the `SkipAuth` decorator.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```typescript
+@SkipAuth()
+```
+
+## CASL
+
+### Roles configuration
+
+Define roles for app:
+
+```typescript
+// app.roles.ts
+
+export enum Roles {
+  ADMIN = 'ADMIN',
+  CUSTOMER = 'CUSTOMER',
+}
+```
