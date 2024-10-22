@@ -6,7 +6,7 @@ This repo contains the backend for the EasyGenerator interview assignment.
 
 ![API Status](https://img.shields.io/website-up-down-green-red/https/authly-api-production.up.railway.app/api/v1/health)
 
-[Live API Health Check](https://authly-api-production.up.railway.app/api/v1/health)
+[Live API](https://authly-api-production.up.railway.app/api/v1/health)
 
 ## Functionality 🛠️
 
