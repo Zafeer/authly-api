@@ -19,6 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "npm run test:config:e2e",
     "test:config:e2e": "jest --config jest-e2e.json --runInBand",
+    "db:generate": "prisma generate",
+    "db:push": "npx prisma db push",
     "prepare": "husky"
   },
   "dependencies": {

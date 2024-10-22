@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.18.0
+ARG NODE_VERSION=20.15.1
 FROM node:${NODE_VERSION}-slim as base
 
 
@@ -29,7 +29,8 @@ RUN npm ci --include=dev
 COPY --link . .
 
 # Generate prisma schema
-# RUN npm run prisma:generate
+RUN npm run db:generate
+RUN npm run db:push
 
 
 # Build application
