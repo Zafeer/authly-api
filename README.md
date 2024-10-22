@@ -68,7 +68,12 @@ This repo contains the backend for the EasyGenerator interview assignment.
   - Redact sensitive data
   - Correlation Id for each request for debugging
   - Error constants mapping and response
-- Docker Compose
+- CI/CD
+  - Docker Compose for local mongo setup
+  - Deploy to Railway
+  - DockerFile for build
+  - Status indicator
+  - Husky pre commit and linting checks
 - MongoDB Replica Set
 - Serializers
 - Health Check
