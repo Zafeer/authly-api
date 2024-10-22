@@ -45,6 +45,8 @@ This repo contains the backend for the EasyGenerator interview assignment.
   - Email sending
   - Route Guards
   - Hashing of passwords and OTP tokens
+- Database
+  - ORM (See below for technologies)
 - CASL Integration
   - Authorization Guards with role (CUSTOMER, ADMIN)
   - Authorization by role, subject, conditions
@@ -89,7 +91,9 @@ This repo contains the backend for the EasyGenerator interview assignment.
 - Docker Compose
 - MongoDB
 - Node.js
-- NPM
+- npm
+- Prisma ORM
+- Typescript
 
 # Development
 
