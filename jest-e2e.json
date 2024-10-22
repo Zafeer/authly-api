@@ -1,6 +1,6 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
-  "rootDir": "../",
+  "rootDir": ".",
   "testRegex": ".e2e-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s?$": "ts-jest"
@@ -9,14 +9,13 @@
   "coverageDirectory": "../coverage",
   "testEnvironment": "node",
   "moduleNameMapper": {
-    "@casl(.*)": "<rootDir>/src/casl/$1",
     "@filters(.*)": "<rootDir>/src/filters/$1",
     "@guards(.*)": "<rootDir>/src/guards/$1",
     "@pipes(.*)": "<rootDir>/src/pipes/$1",
     "@interceptors(.*)": "<rootDir>/src/interceptors/$1",
     "@interfaces(.*)": "<rootDir>/src/interfaces/$1",
     "@decorators(.*)": "<rootDir>/src/decorators/$1",
-    "@tests(.*)": "<rootDir>/src/tests/$1",
+    "@tests(.*)": "<rootDir>/tests/$1",
     "@modules(.*)": "<rootDir>/src/modules/$1",
     "@config(.*)": "<rootDir>/src/config/$1",
     "@providers(.*)": "<rootDir>/src/providers/$1",

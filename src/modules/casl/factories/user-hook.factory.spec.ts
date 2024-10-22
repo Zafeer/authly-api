@@ -24,7 +24,7 @@ describe('userHookFactory', () => {
     await tupleUserHook.run({
       id: 'id',
       email: faker.internet.email(),
-      roles: ['customer'],
+      roles: ['CUSTOMER'],
     });
     expect(tupleFunc).toBeCalled();
   });
