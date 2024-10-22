@@ -100,7 +100,7 @@ describe('UsersService', () => {
 
       (prismaService.user.findFirst as jest.Mock).mockReturnValueOnce(user);
 
-      expect(await service.findOne('1')).toEqual(user);
+      expect(await service.findById('1')).toEqual(user);
       expect(prismaService.user.findFirst).toHaveBeenCalledWith({
         where: { id: '1' },
       });
@@ -109,7 +109,7 @@ describe('UsersService', () => {
     it('should return null if user is not found', async () => {
       (prismaService.user.findFirst as jest.Mock).mockReturnValueOnce(null);
 
-      expect(await service.findOne('1')).toBeNull();
+      expect(await service.findById('1')).toBeNull();
       expect(prismaService.user.findFirst).toHaveBeenCalledWith({
         where: { id: '1' },
       });
