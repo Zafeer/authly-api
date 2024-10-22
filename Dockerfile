@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.15.1
+ARG NODE_VERSION=18.15
 FROM node:${NODE_VERSION}-slim as base
 
 
@@ -19,7 +19,12 @@ FROM base as build
 
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install -y python-is-python3 pkg-config build-essential 
+    apt-get install -y python-is-python3 pkg-config build-essential
+
+RUN set -ex; \
+apt-get update -y ; \
+apt-get install -y --no-install-recommends \
+    openssl
 
 # Install node modules
 COPY --link package-lock.json package.json ./
