@@ -18,10 +18,8 @@ import swaggerConfig from '@config/swagger.config';
 import corsConfig from '@config/cors.config';
 import mailConfig from '@helpers/mailer/mail/config/mail.config';
 import { LoggerModule } from 'nestjs-pino';
-import { SecurityMiddleware } from '@middlewares/security.middleware';
 import { v4 as uuidv4 } from 'uuid';
 import { RequestLoggerMiddleware } from '@middlewares/request.middleware';
-import pino from 'pino';
 @Module({
   imports: [
     // LoggerModule.forRoot(),

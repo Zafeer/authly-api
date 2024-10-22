@@ -10,7 +10,7 @@ export const ApiOkBaseResponse = ({
   isArray,
   meta,
 }: {
-  dto?: string | Function;
+  dto?: string | (new (...args: any[]) => any);
   isArray?: boolean;
   meta?: boolean;
 }) => {
@@ -47,7 +47,7 @@ export const ApiCreatedBaseResponse = ({
   dto,
   isArray,
 }: {
-  dto?: string | Function;
+  dto?: string | (new (...args: any[]) => any);
   isArray?: boolean;
 }) => {
   return applyDecorators(

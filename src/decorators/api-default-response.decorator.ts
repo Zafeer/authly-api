@@ -17,7 +17,7 @@ export enum StatusCodes {
 
 interface DefaultResponseOptions {
   status?: StatusCodes;
-  type?: string | Function;
+  type?: string | (new (...args: any[]) => any);
   meta?: boolean;
   isArray?: boolean;
   summary?: string;
@@ -40,7 +40,7 @@ const getResponse =
     isArray,
     meta,
   }: {
-    dto?: string | Function;
+    dto?: string | (new (...args: any[]) => any);
     isArray?: boolean;
     meta?: boolean;
   }) => {

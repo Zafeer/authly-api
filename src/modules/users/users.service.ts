@@ -46,6 +46,7 @@ export class UsersService {
     updateUserDto: UpdateUserDto,
   ): Promise<UserWithoutPassword> {
     const partialDataUpdate = Object.fromEntries(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       Object.entries(updateUserDto).filter(([_, value]) => value !== undefined),
     );
     const updatedUser = this.prismaService.user.update({
