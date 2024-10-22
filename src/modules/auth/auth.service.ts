@@ -43,7 +43,6 @@ export class AuthService {
    */
   async signUp(signUpDto: SignUpDto): Promise<User> {
     // Set default values for createUserDto
-    signUpDto.is_verified = signUpDto.is_verified ?? false;
     const user: User = await this.usersService.create(signUpDto);
 
     const otpToken = generateOTP(parseInt(process.env.OTP_LENGTH));

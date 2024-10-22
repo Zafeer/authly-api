@@ -43,7 +43,6 @@ export class SignUpDto {
     each: true,
   })
   roles: Roles[] = [Roles.CUSTOMER];
-  is_verified: boolean = false;
   otpTokenExpiredAt: Date | null;
   otpTokenHash: string | null;
 }
