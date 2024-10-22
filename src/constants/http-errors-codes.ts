@@ -14,7 +14,8 @@ export const INVITE_IS_INVALID = '404012: Invite is invalid';
 
 export const UNAUTHORIZED_RESOURCE = '401000: Unauthorized resource';
 export const INVALID_CREDENTIALS = '401001: Invalid credentials';
-export const UNVERIFIED_EMAIL = '401002: Email is not verified';
+export const UNVERIFIED_EMAIL =
+  '401002: Email is not verified. Click on Forgot Password';
 export const INVALID_OTP_EXPIRY = '401003: Invalid OTP expiry';
 export const INVALID_OTP_TOKEN = '401004: Invalid OTP token';
 export const OTP_TOKEN_IS_EXPIRED = '401005: OTP Token is expired';
