@@ -8,6 +8,8 @@ This repo contains the backend for the EasyGenerator interview assignment.
 
 [Live API](https://authly-api-production.up.railway.app/api/v1/health)
 
+> **NOTE:** Attempt made not to use any third party auth provider / passport js by default since this is the crux of the assignment.
+
 ## Functionality 🛠️
 
 ### **User Management** 🚹:
@@ -80,6 +82,20 @@ This repo contains the backend for the EasyGenerator interview assignment.
 - Serializers
 - Health Check
 
+## Environment Variables 🌍
+
+Default environment variables passed during the Docker build process:
+
+- `DATABASE_URL`: DB Url.
+- `APP_PORT`: Api server port to serve requests.
+- `SWAGGER_PASSWORD`: Swagger password for opening the api docs
+- `RESEND_EMAIL_API_KEY`: [Resend](https://resend.com/) Api key for sending emails.
+- `OTP_LENGTH`: Number of OTP digits
+- `APP_NAME`: Name of the application
+- `DEFAULT_EMAIL`: Email registered with Resend. Make sure it is from the same domain registered and verified
+- `DEFAULT_NAME` : Name of the email sender
+- `APP_LOGGER_LEVEL`: Logging level
+
 # Providers implemented
 
 - Prisma
@@ -107,13 +123,13 @@ docker volume create --name mongodb_repl_data2 -d local
 docker volume create --name mongodb_repl_data3 -d local
 ```
 
-2. Start the Docker containers using docker-compose
+2. Start the Docker containers on the host machine using docker-compose
 
 ```bash
-docker-compose up -d
+docker-compose -f docker-compose-db.yml up -d
 ```
 
-3. Start an interactive MongoDb shell session on the primary node
+3. Start an interactive MongoDb shell session on the primary node in the cluster
 
 ```bash
 docker exec -it mongo0 mongosh --port 30000
@@ -123,7 +139,7 @@ config={"_id":"rs0","members":[{"_id":0,"host":"mongo0:30000"},{"_id":1,"host":"
 rs.initiate(config);
 ```
 
-4 Update hosts file
+4 Update hosts file on hosts machine
 
 ```bash
 sudo nano /etc/hosts
@@ -132,47 +148,33 @@ sudo nano /etc/hosts
 127.0.0.1 mongo0 mongo1 mongo2
 ```
 
-5. Connect to MongoDB and check the status of the replica set
+5. Connect to MongoDB on host machine and check the status of the replica set
 
-```
+```bash
 mongosh "mongodb://localhost:30000,localhost:30001,localhost:30002/?replicaSet=rs0"
 ```
 
-## Migration
-
-1. Run migrations
+## API setup
 
 ```bash
-npm run db:migrate:up
-```
-
-## Project setup
-
-1. Install Dependancies
-
-```
 npm install
 ```
 
-## Project setup
+## DB Setup
+
+2. Generate Prisma Types
 
 ```bash
-$ npm install
-```
-
-## Compile and run the project
-
-1. Generate Prisma Types
-
-```
 npm run db:generate
 ```
 
-2. Push MongoDB Schema
+2. Run migrations
 
-```
+```bash
 npm run db:push
 ```
+
+## Project Compile and Run
 
 3. Run application in below ways
 
@@ -200,9 +202,27 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Swagger
+# Production
 
-Swagger documentation is available at http://localhost:3000/docs
+1. Use a mongo cluster via [Atlas](https://cloud.mongodb.com/)
+2. For the Api either self host it via
+
+```bash
+docker-compose -f docker-compose-api.yml up -d
+```
+
+OR
+
+Deploy via [Railway Template](https://railway.app/template/Abo1zu)
+
+## Swagger Documentation
+
+Swagger documentation is available at [{{DOMAIN_NAME}}/docs]({{DOMAIN_NAME}}/docs).
+
+### Credentials
+
+- **Username:** `admin`
+- **Password:** Per the environment variable
 
 ## JWT
 
